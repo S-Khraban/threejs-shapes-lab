@@ -7,4 +7,9 @@ export function initTextureSelect() {
   textureSelect.innerHTML = TEXTURES
     .map(({ label, value }) => `<option value="${value}">${label}</option>`)
     .join('');
+
+  const defaultTexture =
+    TEXTURES.find((t) => t.label === 'Earth')?.value || '';
+
+  textureSelect.value = defaultTexture;
 }

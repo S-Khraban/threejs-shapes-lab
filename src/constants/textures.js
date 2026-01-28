@@ -1,4 +1,4 @@
-const BASE = import.meta.env.BASE_URL; 
+const BASE = import.meta.env.BASE_URL;
 
 export const TEXTURES = [
   { label: 'None', value: '' },
@@ -6,4 +6,5 @@ export const TEXTURES = [
   { label: 'Grass', value: `${BASE}textures/grass_tr.jpg` },
   { label: 'Water', value: `${BASE}textures/water_tr.jpg` },
   { label: 'Wood', value: `${BASE}textures/wood_tr.jpg` },
+  { label: 'Earth', value: `${BASE}textures/earth_tr.jpg` },
 ];
