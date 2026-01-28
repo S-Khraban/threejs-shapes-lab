@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Three.js Shapes Lab</title>
+  </head>
+  <body>
+    <div class="ui">
+      <label>
+        Shape:
+        <select id="shapeSelect">
+          <option value="box">Box</option>
+          <option value="sphere">Sphere</option>
+          <option value="cone">Cone</option>
+          <option value="cylinder">Cylinder</option>
+        </select>
+      </label>
+
+      <label>
+        Appearance:
+        <select id="appearanceSelect">
+          <option value="standard|#44aa88">Standard • Teal</option>
+          <option value="standard|#ff3b30">Standard • Red</option>
+          <option value="standard|#0a84ff">Standard • Blue</option>
+          <option value="standard|#ffd60a">Standard • Yellow</option>
+
+          <option value="phong|#44aa88">Phong • Teal</option>
+          <option value="phong|#ff3b30">Phong • Red</option>
+          <option value="phong|#0a84ff">Phong • Blue</option>
+
+          <option value="lambert|#44aa88">Lambert • Teal</option>
+          <option value="lambert|#ff3b30">Lambert • Red</option>
+
+          <option value="basic|#ffffff">Basic • White</option>
+          <option value="basic|#00ff00">Basic • Green</option>
+        </select>
+      </label>
+
+      <label>
+        Texture:
+        <select id="textureSelect">
+          <option value="">None</option>
+          <option value="/textures/brick_tr.jpg">Brick</option>
+          <option value="/textures/grass_tr.jpg">Grass</option>
+          <option value="/textures/water_tr.jpg">Water</option>
+          <option value="/textures/wood_tr.jpg">Wood</option>
+        </select>
+      </label>
+
+      <label>
+        Light:
+        <select id="lightModeSelect">
+          <option value="directional">Directional</option>
+          <option value="point">Point</option>
+          <option value="none">None</option>
+        </select>
+      </label>
+
+      <label>
+        Intensity:
+        <input
+          id="lightIntensity"
+          type="range"
+          min="0"
+          max="3"
+          step="0.1"
+          value="1"
+        />
+      </label>
+
+      <label>
+        Color:
+        <input id="lightColor" type="color" value="#ffffff" />
+      </label>
+
+      <label>
+        Zoom:
+        <div class="zoom-controls">
+          <button id="zoomOutBtn" type="button">−</button>
+          <button id="zoomInBtn" type="button">+</button>
+        </div>
+      </label>
+    </div>
+
+    <div id="lightHandle" class="light-handle" title="Drag to move light">🔆</div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
