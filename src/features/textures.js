@@ -5,30 +5,31 @@ export function createTextureController() {
   let currentTexture = null;
 
   async function setTexture(url) {
+    // clear texture
     if (!url) {
-      if (currentTexture) currentTexture.dispose();
-      currentTexture = null;
-      return;
+      if (currentTexture) {
+        currentTexture.dispose();
+        currentTexture = null;
+      }
+      return null;
     }
 
-    await new Promise((resolve, reject) => {
-      loader.load(
-        url,
-        (tex) => {
-          if (currentTexture) currentTexture.dispose();
+    try {
+      const tex = await loader.loadAsync(url);
 
-          tex.colorSpace = THREE.SRGBColorSpace;
-          tex.wrapS = THREE.RepeatWrapping;
-          tex.wrapT = THREE.RepeatWrapping;
-          tex.repeat.set(1, 1);
+      tex.colorSpace = THREE.SRGBColorSpace;
+      tex.wrapS = THREE.RepeatWrapping;
+      tex.wrapT = THREE.RepeatWrapping;
+      tex.repeat.set(1, 1);
 
-          currentTexture = tex;
-          resolve();
-        },
-        undefined,
-        reject
-      );
-    });
+      if (currentTexture) currentTexture.dispose();
+      currentTexture = tex;
+
+      return tex;
+    } catch (err) {
+      console.error('[Texture] Failed to load:', url, err);
+      return null;
+    }
   }
 
   function getTexture() {

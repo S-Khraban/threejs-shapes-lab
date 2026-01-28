@@ -8,6 +8,9 @@ import { createLightController } from './features/lightController.js';
 import { createOrbitControls } from './features/orbitControls.js';
 import { createCameraZoom } from './features/cameraZoom.js';
 import { bindUI } from './ui/bindUI.js';
+import { initTextureSelect } from './ui/initTextureSelect.js';
+
+initTextureSelect();
 
 const { scene, camera, renderer } = initScene();
 
@@ -33,13 +36,14 @@ let state = {
   color: '#44aa88',
 };
 
-let material = createMaterial(
-  state.materialType,
-  state.color,
-  textureController.getTexture()
-);
+let material = createMaterial(state.materialType, state.color, null);
 let mesh = createMesh(state.shape, material);
 scene.add(mesh);
+
+function applyTextureToMaterial(tex) {
+  mesh.material.map = tex || null;
+  mesh.material.needsUpdate = true;
+}
 
 function setMesh(nextMesh) {
   scene.remove(mesh);
@@ -47,12 +51,14 @@ function setMesh(nextMesh) {
   mesh.material.dispose();
   mesh = nextMesh;
   scene.add(mesh);
+  applyTextureToMaterial(textureController.getTexture());
 }
 
 function setMaterial(nextMaterial) {
   mesh.material.dispose();
   mesh.material = nextMaterial;
   material = nextMaterial;
+  applyTextureToMaterial(textureController.getTexture());
 }
 
 bindUI({
@@ -70,18 +76,19 @@ bindUI({
   onAppearanceChange: (materialType, color) => {
     state.materialType = materialType;
     state.color = color;
+
     const nextMaterial = createMaterial(
       state.materialType,
       state.color,
       textureController.getTexture()
     );
+
     setMaterial(nextMaterial);
   },
 
   onTextureChange: async (url) => {
-    await textureController.setTexture(url);
-    mesh.material.map = textureController.getTexture();
-    mesh.material.needsUpdate = true;
+    const tex = await textureController.setTexture(url);
+    applyTextureToMaterial(tex);
   },
 });
 
@@ -95,4 +102,5 @@ function animate() {
   renderer.render(scene, camera);
 }
 
+applyTextureToMaterial(textureController.getTexture());
 animate();
